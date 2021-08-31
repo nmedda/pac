@@ -183,6 +183,8 @@ Formulaire As screen:
                 varRecord, 
                 Blank())
         NumberOfColumns: =12
+        OnSuccess: |-
+            =Navigate(Formulaire,ScreenTransition.None,{varRecord:Form.LastSubmit})
         Width: =1366
         Y: =92
         ZIndex: =37
@@ -760,6 +762,17 @@ Formulaire As screen:
             Y: =28
             ZIndex: =1
 
+        DataCard1 As typedDataCard.blankCard:
+            BorderColor: =RGBA(131, 24, 75, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =200
+            Width: =339
+            X: =0
+            Y: =34
+            ZIndex: =1
+
         SeparateurFinDeForm As typedDataCard.blankCard:
             BorderColor: =RougeMH
             BorderStyle: =BorderStyle.Solid
@@ -768,7 +781,7 @@ Formulaire As screen:
             Height: =0
             Width: =1356
             X: =0
-            Y: =36
+            Y: =35
             ZIndex: =1
 
             Container1 As groupContainer.horizontalAutoLayoutContainer:
@@ -826,15 +839,22 @@ Formulaire As screen:
                     Y: =76
                     ZIndex: =2
 
-        DataCard1 As typedDataCard.blankCard:
+        NonConcerneDematPRDGSante_DataCard1 As typedDataCard.textualEditCard:
             BorderColor: =RGBA(131, 24, 75, 1)
             BorderStyle: =BorderStyle.Solid
-            DisplayMode: =DisplayMode.Edit
+            DataField: ="NonConcerneDematPRDGSante"
+            Default: =ThisItem.NonConcerneDematPRDGSante
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneDematPRDGSante"
             Fill: =RGBA(0, 0, 0, 0)
-            Height: =200
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NonConcerneDematPRDGSante")
+            Required: =false
+            Update: =Text(NoteNiveauDematPRDGSante_DataCard_NonConcerne.Value)
+            Visible: =false
             Width: =339
             X: =0
-            Y: =34
+            Y: =38
             ZIndex: =1
 
         Titre_DataCard As typedDataCard.textualEditCard:
@@ -2026,7 +2046,7 @@ Formulaire As screen:
             BorderColor: =RougeMH
             BorderStyle: =BorderStyle.Solid
             DataField: ="NoteNiveauDematPRDGPrevoyance"
-            Default: =If(NoteNiveauDematPRDGPrevoyance_DataCard_NonConcern.Value, 0, ThisItem.NoteNiveauDematPRDGPrevoyance)
+            Default: =If(NoteNiveauDematPRDGPrevoyance_DataCard_NonConcerne.Value, 0, ThisItem.NoteNiveauDematPRDGPrevoyance)
             DisplayMode: =Parent.DisplayMode
             DisplayName: ="NoteNiveauDematPRDGPrevoyance"
             Fill: =RGBA(0, 0, 0, 0)
@@ -2054,7 +2074,7 @@ Formulaire As screen:
                 Y: =10
                 ZIndex: =1
 
-            NoteNiveauDematPRDGPrevoyance_DataCard_NonConcern As checkbox:
+            NoteNiveauDematPRDGPrevoyance_DataCard_NonConcerne As checkbox:
                 BorderColor: =RougeMH
                 CheckboxBorderColor: =RougeMH
                 Color: =RGBA(0, 0, 0, 1)
@@ -2067,7 +2087,7 @@ Formulaire As screen:
                 Text: ="Non concerné"
                 Width: =211
                 X: =265
-                Y: =44
+                Y: =50
                 ZIndex: =1
 
             NotationNiveauDematPRDGPrevoyance As rating:
@@ -2078,7 +2098,7 @@ Formulaire As screen:
                 DisabledBorderColor: =RGBA(166, 166, 166, 1)
                 DisabledFill: =Self.Fill
                 DisplayMode: |
-                    =If(NoteNiveauDematPRDGPrevoyance_DataCard_NonConcern.Value,Disabled,DisplayMode.Edit)
+                    =If(NoteNiveauDematPRDGPrevoyance_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
                 Fill: =RGBA(0, 0, 0, 0)
                 FocusedBorderColor: =Self.BorderColor
                 FocusedBorderThickness: =2
@@ -2090,142 +2110,6 @@ Formulaire As screen:
                 X: =30
                 Y: =50
                 ZIndex: =5
-
-        NoteNiveauDematPRDGContrats_DataCard As typedDataCard.textualEditCard:
-            BorderColor: =RougeMH
-            BorderStyle: =BorderStyle.Solid
-            DataField: ="NoteNiveauDematPRDGContrats"
-            Default: =If(NoteNiveauDematPRDGContrats_DataCard_NonConcerne.Value, 0, ThisItem.NoteNiveauDematPRDGContrats)
-            DisplayMode: =Parent.DisplayMode
-            DisplayName: ="NoteNiveauDematPRDGContrats"
-            Fill: =RGBA(0, 0, 0, 0)
-            Height: =100
-            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteNiveauDematPRDGContrats")
-            Required: =false
-            Update: =NotationNiveauDematPRDGContrats.Value
-            Width: =678
-            X: =0
-            Y: =18
-            ZIndex: =38
-
-            NoteNiveauDematPRDGContrats_DataCard_Label As label:
-                AutoHeight: =true
-                Color: =RGBA(50, 49, 48, 1)
-                DisabledColor: =RGBA(166, 166, 166, 1)
-                FontWeight: =FontWeight.Semibold
-                Height: =34
-                Size: =13
-                Text: ="Niveau démat en flux PRDG cotisation"
-                Width: =Parent.Width - 60
-                Wrap: =false
-                X: =30
-                Y: =10
-                ZIndex: =1
-
-            NotationNiveauDematPRDGContrats As rating:
-                BorderColor: =RGBA(211, 66, 9, 1)
-                BorderStyle: =BorderStyle.Solid
-                BorderThickness: =0
-                Default: =Parent.Default
-                DisabledBorderColor: =RGBA(166, 166, 166, 1)
-                DisabledFill: =Self.Fill
-                DisplayMode: |
-                    =If(NoteNiveauDematPRDGCotisation_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
-                Fill: =RGBA(0, 0, 0, 0)
-                FocusedBorderColor: =Self.BorderColor
-                FocusedBorderThickness: =2
-                Height: =40
-                HoverFill: =Self.Fill
-                PressedFill: =Self.Fill
-                RatingFill: =RGBA(211, 66, 9, 1)
-                Width: =200
-                X: =30
-                Y: =50
-                ZIndex: =5
-
-            NoteNiveauDematPRDGCotisation_DataCard_NonConcerne As checkbox:
-                BorderColor: =RougeMH
-                CheckboxBorderColor: =RougeMH
-                Color: =RGBA(0, 0, 0, 1)
-                Default: =ThisItem.NonConcerneDematPRDGCotisation
-                Height: =44
-                HoverColor: =RougeMH
-                OnCheck: =Reset(NotationNiveauDematPRDGCotisation)
-                OnUncheck: =Reset(NotationNiveauDematPRDGCotisation)
-                Size: =13
-                Text: ="Non concerné"
-                Width: =211
-                X: =265
-                Y: =50
-                ZIndex: =6
-
-        NoteNiveauDematPRDGCotisation_DataCard As typedDataCard.textualEditCard:
-            BorderColor: =RougeMH
-            BorderStyle: =BorderStyle.Solid
-            DataField: ="NoteNiveauDematPRDGCotisation"
-            Default: =If(NoteNiveauDematPRDGCotisation_DataCard_NonConcerne.Value, 0, ThisItem.NoteNiveauDematPRDGCotisation)
-            DisplayMode: =Parent.DisplayMode
-            DisplayName: ="NoteNiveauDematPRDGCotisation"
-            Fill: =RGBA(0, 0, 0, 0)
-            Height: =50
-            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteNiveauDematPRDGCotisation")
-            Required: =false
-            Update: =NotationNiveauDematPRDGCotisation.Value
-            Width: =678
-            X: =0
-            Y: =19
-            ZIndex: =38
-
-            NoteNiveauDematPRDGCotisation_DataCard_Label As label:
-                AutoHeight: =true
-                Color: =RGBA(50, 49, 48, 1)
-                DisabledColor: =RGBA(166, 166, 166, 1)
-                FontWeight: =FontWeight.Semibold
-                Height: =34
-                Size: =13
-                Text: ="Niveau démat en flux PRDG en ref contrats"
-                Width: =Parent.Width - 60
-                Wrap: =false
-                X: =30
-                Y: =10
-                ZIndex: =1
-
-            NotationNiveauDematPRDGCotisation As rating:
-                BorderColor: =RGBA(211, 66, 9, 1)
-                BorderStyle: =BorderStyle.Solid
-                BorderThickness: =0
-                Default: =Parent.Default
-                DisabledBorderColor: =RGBA(166, 166, 166, 1)
-                DisabledFill: =Self.Fill
-                DisplayMode: |
-                    =If(NoteNiveauDematPRDGContrats_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
-                Fill: =RGBA(0, 0, 0, 0)
-                FocusedBorderColor: =Self.BorderColor
-                FocusedBorderThickness: =2
-                Height: =40
-                HoverFill: =Self.Fill
-                PressedFill: =Self.Fill
-                RatingFill: =RGBA(211, 66, 9, 1)
-                Width: =200
-                X: =30
-                Y: =50
-                ZIndex: =5
-
-            NoteNiveauDematPRDGContrats_DataCard_NonConcerne As checkbox:
-                BorderColor: =RougeMH
-                CheckboxBorderColor: =RougeMH
-                Color: =RGBA(0, 0, 0, 1)
-                Default: =ThisItem.NonConcerneDematPRDGContrats
-                Height: =44
-                HoverColor: =RougeMH
-                OnCheck: =Reset(NotationNiveauDematPRDGContrats)
-                OnUncheck: =Reset(NotationNiveauDematPRDGContrats)
-                Size: =13
-                Text: ="Non concerné"
-                Width: =211
-                X: =265
-                Y: =50
-                ZIndex: =6
 
         NoteEvolutionRAD_DataCard As typedDataCard.textualEditCard:
             BorderColor: =RougeMH
@@ -2992,7 +2876,7 @@ Formulaire As screen:
             Visible: =false
             Width: =0
             X: =0
-            Y: =37
+            Y: =36
             ZIndex: =38
 
         NotePriseCompteEvoDSNNonConcerne_DataCard As typedDataCard.textualEditCard:
@@ -3009,7 +2893,7 @@ Formulaire As screen:
             Visible: =false
             Width: =0
             X: =0
-            Y: =37
+            Y: =36
             ZIndex: =38
 
         NoteRespectCondConvNonConcerne_DataCard As typedDataCard.textualEditCard:
@@ -3026,24 +2910,7 @@ Formulaire As screen:
             Visible: =false
             Width: =0
             X: =0
-            Y: =37
-            ZIndex: =38
-
-        NNoteDematPRDGSanteNonConcerne_DataCard As typedDataCard.textualEditCard:
-            BorderColor: =RougeMH
-            BorderStyle: =BorderStyle.Solid
-            DataField: ="NNoteDematPRDGSanteNonConcerne"
-            Default: =ThisItem.NNoteDematPRDGSanteNonConcerne
-            DisplayMode: =Parent.DisplayMode
-            DisplayName: ="NNoteDematPRDGSanteNonConcerne"
-            Fill: =RGBA(0, 0, 0, 0)
-            Height: =0
-            Required: =false
-            Update: =Text(NoteNiveauDematPRDGSante_DataCard_NonConcerne.Value)
-            Visible: =false
-            Width: =0
-            X: =0
-            Y: =37
+            Y: =36
             ZIndex: =38
 
         NoteDematPRDGPrevNonConcerne_DataCard As typedDataCard.textualEditCard:
@@ -3056,11 +2923,11 @@ Formulaire As screen:
             Fill: =RGBA(0, 0, 0, 0)
             Height: =0
             Required: =false
-            Update: =Text(NoteNiveauDematPRDGPrevoyance_DataCard_NonConcern.Value)
+            Update: =Text(NoteNiveauDematPRDGPrevoyance_DataCard_NonConcerne.Value)
             Visible: =false
             Width: =0
             X: =0
-            Y: =37
+            Y: =36
             ZIndex: =38
 
         NoteDematPRDGCotisNonConcerne_DataCard As typedDataCard.textualEditCard:
@@ -3077,7 +2944,7 @@ Formulaire As screen:
             Visible: =false
             Width: =0
             X: =0
-            Y: =37
+            Y: =36
             ZIndex: =38
 
         NoteQAPrestationFSSNonConcerne_DataCard As typedDataCard.textualEditCard:
@@ -3094,7 +2961,7 @@ Formulaire As screen:
             Visible: =false
             Width: =200
             X: =0
-            Y: =37
+            Y: =36
             ZIndex: =38
 
         NoteQAPrestationPREVNonConcerne_DataCard As typedDataCard.textualEditCard:
@@ -3111,92 +2978,7 @@ Formulaire As screen:
             Visible: =true
             Width: =200
             X: =2
-            Y: =37
-            ZIndex: =38
-
-        NoteDematPRDGContratsNonConcerne_DataCard As typedDataCard.textualEditCard:
-            BorderColor: =RougeMH
-            BorderStyle: =BorderStyle.Solid
-            DataField: ="NonConcerneDematPRDGContrats"
-            Default: =ThisItem.NonConcerneDematPRDGContrats
-            DisplayMode: =Parent.DisplayMode
-            DisplayName: ="NonConcerneDematPRDGContrats"
-            Fill: =RGBA(0, 0, 0, 0)
-            Height: =0
-            Required: =false
-            Update: =Text(NoteNiveauDematPRDGContrats_DataCard_NonConcerne.Value)
-            Visible: =true
-            Width: =200
-            X: =4
-            Y: =37
-            ZIndex: =38
-
-        NoteCapaciteAdaptationAuxEvolutiNonConcerne_DataCard As typedDataCard.textualEditCard:
-            BorderColor: =RougeMH
-            BorderStyle: =BorderStyle.Solid
-            DataField: ="NoteCapaciteAdaptationAuxEvolutiNonConcerne"
-            Default: =ThisItem.NonConcerneCapaciteAdaptation
-            DisplayMode: =Parent.DisplayMode
-            DisplayName: ="NonConcerneCapaciteAdaptation"
-            Fill: =RGBA(0, 0, 0, 0)
-            Height: =0
-            Required: =false
-            Update: =Text(NoteCapaciteAdaptationAuxEvoluti_DataCard_NonConcerne.Value)
-            Visible: =false
-            Width: =0
-            X: =6
-            Y: =37
-            ZIndex: =38
-
-        NoteQualiteSINonConcerne_DataCard As typedDataCard.textualEditCard:
-            BorderColor: =RougeMH
-            BorderStyle: =BorderStyle.Solid
-            DataField: ="NonConcerneQualiteSI"
-            Default: =ThisItem.NonConcerneQualiteSI
-            DisplayMode: =Parent.DisplayMode
-            DisplayName: ="NonConcerneQualiteSI"
-            Fill: =RGBA(0, 0, 0, 0)
-            Height: =0
-            Required: =false
-            Update: =Text(NoteQualiteSI_DataCard_NonConcerne.Value)
-            Visible: =false
-            Width: =0
-            X: =6
-            Y: =37
-            ZIndex: =38
-
-        NoteDernierAuditNonConcerne_DataCard As typedDataCard.textualEditCard:
-            BorderColor: =RougeMH
-            BorderStyle: =BorderStyle.Solid
-            DataField: ="NonConcerneDernierAudit"
-            Default: =ThisItem.NonConcerneDernierAudit
-            DisplayMode: =Parent.DisplayMode
-            DisplayName: ="NonConcerneDernierAudit"
-            Fill: =RGBA(0, 0, 0, 0)
-            Height: =0
-            Required: =false
-            Update: =Text(NotationQualiteDernierAudit_NonConcerne.Value)
-            Visible: =false
-            Width: =0
-            X: =6
-            Y: =37
-            ZIndex: =38
-
-        NoteEvolutionRADNonConcerne_DataCard As typedDataCard.textualEditCard:
-            BorderColor: =RougeMH
-            BorderStyle: =BorderStyle.Solid
-            DataField: ="NonConcerneEvolutionRAD"
-            Default: =ThisItem.NonConcerneEvolutionRAD
-            DisplayMode: =Parent.DisplayMode
-            DisplayName: ="NonConcerneEvolutionRAD"
-            Fill: =RGBA(0, 0, 0, 0)
-            Height: =0
-            Required: =false
-            Update: =Text(NoteEvolutionRAD_DataCard_NonConcerne.Value)
-            Visible: =false
-            Width: =0
-            X: =6
-            Y: =37
+            Y: =36
             ZIndex: =38
 
         StatutValidationReponse_DataCard As typedDataCard.textualEditCard:
@@ -3214,7 +2996,7 @@ Formulaire As screen:
             Visible: =false
             Width: =1366
             X: =0
-            Y: =35
+            Y: =37
             ZIndex: =38
 
             StatutValidationReponse_DataCard_Label As label:
@@ -3256,6 +3038,227 @@ Formulaire As screen:
                 X: =30
                 Y: =StatutValidationReponse_DataCard_Label.Y + StatutValidationReponse_DataCard_Label.Height + 5
                 ZIndex: =2
+
+        NoteCapaciteAdaptationAuxEvolutiNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneCapaciteAdaptation"
+            Default: =ThisItem.NonConcerneCapaciteAdaptation
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneCapaciteAdaptation"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NoteCapaciteAdaptationAuxEvoluti_DataCard_NonConcerne.Value)
+            Visible: =false
+            Width: =0
+            X: =3
+            Y: =38
+            ZIndex: =38
+
+        NoteQualiteSINonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneQualiteSI"
+            Default: =ThisItem.NonConcerneQualiteSI
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneQualiteSI"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NoteQualiteSI_DataCard_NonConcerne.Value)
+            Visible: =false
+            Width: =0
+            X: =3
+            Y: =38
+            ZIndex: =38
+
+        NoteDernierAuditNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneDernierAudit"
+            Default: =ThisItem.NonConcerneDernierAudit
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneDernierAudit"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NotationQualiteDernierAudit_NonConcerne.Value)
+            Visible: =false
+            Width: =0
+            X: =3
+            Y: =38
+            ZIndex: =38
+
+        NoteEvolutionRADNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneEvolutionRAD"
+            Default: =ThisItem.NonConcerneEvolutionRAD
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneEvolutionRAD"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NoteEvolutionRAD_DataCard_NonConcerne.Value)
+            Visible: =false
+            Width: =0
+            X: =3
+            Y: =38
+            ZIndex: =38
+
+        NoteNiveauDematPRDGCotisation_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteNiveauDematPRDGCotisation"
+            Default: =If(NoteNiveauDematPRDGCotisation_DataCard_NonConcerne.Value, 0, ThisItem.NoteNiveauDematPRDGCotisation)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NoteNiveauDematPRDGCotisation"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteNiveauDematPRDGCotisation")
+            Required: =false
+            Update: =NotationNiveauDematPRDGCotisation.Value
+            Width: =678
+            X: =0
+            Y: =18
+            ZIndex: =38
+
+            NoteNiveauDematPRDGCotisation_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Niveau démat en flux PRDG cotisation"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NotationNiveauDematPRDGCotisation As rating:
+                BorderColor: =RGBA(211, 66, 9, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NoteNiveauDematPRDGCotisation_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =2
+                Height: =40
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(211, 66, 9, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+            NoteNiveauDematPRDGCotisation_DataCard_NonConcerne As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneDematPRDGCotisation
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NotationNiveauDematPRDGCotisation)
+                OnUncheck: =Reset(NotationNiveauDematPRDGCotisation)
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =265
+                Y: =50
+                ZIndex: =7
+
+        NoteNiveauDematPRDGContrats_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteNiveauDematPRDGContrats"
+            Default: =If(NoteNiveauDematPRDGContrats_DataCard_NonConcerne.Value, 0, ThisItem.NoteNiveauDematPRDGContrats)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NoteNiveauDematPRDGContrats"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteNiveauDematPRDGContrats")
+            Required: =false
+            Update: =NotationNiveauDematPRDGContrats.Value
+            Width: =678
+            X: =0
+            Y: =19
+            ZIndex: =38
+
+            NoteNiveauDematPRDGContrats_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Niveau démat en flux PRDG en ref contrats"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NotationNiveauDematPRDGContrats As rating:
+                BorderColor: =RGBA(211, 66, 9, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NoteNiveauDematPRDGContrats_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =2
+                Height: =40
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(211, 66, 9, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+            NoteNiveauDematPRDGContrats_DataCard_NonConcerne As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneDematPRDGContrats
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NotationNiveauDematPRDGContrats)
+                OnUncheck: =Reset(NotationNiveauDematPRDGContrats)
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =265
+                Y: =50
+                ZIndex: =6
+
+        NoteDematPRDGContratsNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneDematPRDGContrats"
+            Default: =ThisItem.NonConcerneDematPRDGContrats
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneDematPRDGContrats"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NoteNiveauDematPRDGContrats_DataCard_NonConcerne.Value)
+            Visible: =true
+            Width: =200
+            X: =4
+            Y: =36
+            ZIndex: =38
 
     "'En-Tête-grp_1' As group":
         Height: =5
