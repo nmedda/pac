@@ -1,0 +1,3381 @@
+Formulaire As screen:
+    Fill: =RGBA(255,255,255,1)
+    LoadingSpinnerColor: =RGBA(211, 66, 9, 1)
+    OnHidden: =
+    OnVisible: |
+        =ClearCollect(lPartenaires, {Image: Logo_2.Image});
+        ResetForm(Form);
+        ClearCollect(perimetreAssureur, ["ex-h", "4M", "ex-MM"]);
+        ClearCollect(typologieDelegation, ["Cotisations", "Prestations"]);
+        UpdateContext({varRecord: LookUp(varAuditEtControl, ReferenceDmAuditEtControl = Selected_Demd)});
+        ClearCollect(varTypologieDelegation, ForAll(Split(varRecord.TypologieDelegation, ","), ThisRecord.Result).Value);
+        ClearCollect(varPerimetreAssureur, [], ForAll(Split(varRecord.PerimetreAssureur, ","), ThisRecord.Result).Value);
+        ClearCollect(varAssureurSantePrevIndTNS, [], ForAll(Split(varRecord.AssureurSantePrevIndTNS, ","), ThisRecord.Result).Value);
+        ClearCollect(varDelegationSantePrevIndTNS, [], ForAll(Split(varRecord.DelegationSantePrevIndTNS, ","), ThisRecord.Result).Value);
+        ClearCollect(varAssureurSantePrevCollStandard, ForAll(Split(varRecord.AssureurSantePrevCollStandard, ","), ThisRecord.Result).Value);
+        ClearCollect(varDelegationSantePrevCollStandard, ForAll(Split(varRecord.DelegationSantePrevCollStandard, ","), ThisRecord.Result).Value);
+        ClearCollect(varAssureurPrevIndHorsTNS, ForAll(Split(varRecord.AssureurPrevIndHorsTNS, ","), ThisRecord.Result).Value);
+        ClearCollect(varDelegationPrevIndHorsTNS, ForAll(Split(varRecord.DelegationPrevIndHorsTNS, ","), ThisRecord.Result).Value);
+        ClearCollect(varAssureurSantePrevSurMesure, ForAll(Split(varRecord.AssureurSantePrevSurMesure, ","), ThisRecord.Result).Value);
+        ClearCollect(varDelegationSantePrevSurMesure, ForAll(Split(varRecord.DelegationSantePrevSurMesure, ","), ThisRecord.Result).Value);
+        ClearCollect(varAssureurEmprunteur, ForAll(Split(varRecord.AssureurEmprunteur, ","), ThisRecord.Result).Value);
+        ClearCollect(varDelegationEmprunteur, ForAll(Split(varRecord.DelegationEmprunteur, ","), ThisRecord.Result).Value);
+
+    Neoreeds_contact_support_popup_2 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =34
+
+        popup_neoreeds_bckgrnd_2 As label:
+            BorderColor: =RougeMH
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(0, 0, 0, 0.3)
+            Height: =768
+            OnSelect: |-
+                =UpdateContext({_visiblePopupSupport:false})
+            Size: =13
+            Text: =""
+            Visible: =_visiblePopupSupport
+            Width: =1366
+            ZIndex: =19
+
+        popup_lbl_bckgrnd_2 As text:
+            BorderColor: =RougeMH
+            BorderThickness: =2
+            Color: =RGBA(0, 0, 0, 1)
+            Default: =
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            DisabledFill: =RGBA(244, 244, 244, 1)
+            DisplayMode: =DisplayMode.View
+            FocusedBorderThickness: =4
+            Height: =318
+            HoverBorderColor: =RGBA(131, 24, 75, 1)
+            HoverColor: =RGBA(0, 0, 0, 1)
+            HoverFill: =RGBA(255, 211, 205, 1)
+            Size: =13
+            Visible: =_visiblePopupSupport
+            Width: =840
+            X: =297
+            Y: =260
+            ZIndex: =21
+
+        close_popup_icn_2 As icon.Cancel:
+            BorderColor: =RougeMH
+            Color: =RougeMH
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisabledColor: =RGBA(244, 244, 244, 1)
+            Height: =40
+            Icon: =Icon.Cancel
+            OnSelect: |-
+                =UpdateContext({_visiblePopupSupport:false})
+            Visible: =_visiblePopupSupport
+            Width: =40
+            X: =1078
+            Y: =270
+            ZIndex: =22
+
+        ContactSupport_lbl_2 As label:
+            BorderColor: =RougeMH
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Height: =36
+            Size: =13
+            Text: |-
+                ="Contacts support :"
+            Visible: =_visiblePopupSupport
+            Width: =180
+            X: =371
+            Y: =348
+            ZIndex: =23
+
+        VersionApp_lbl_2 As label:
+            BorderColor: =RougeMH
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Height: =32
+            Size: =10
+            Text: |-
+                ="Version application: "
+            Visible: =_visiblePopupSupport
+            Width: =182
+            X: =758
+            Y: =519
+            ZIndex: =24
+
+        VersionAppNumber_lbl_2 As label:
+            Align: =Align.Right
+            BorderColor: =RougeMH
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Height: =32
+            Size: =10
+            Text: |
+                =Version
+            Visible: =_visiblePopupSupport
+            Width: =89
+            X: =912
+            Y: =519
+            ZIndex: =25
+
+        DateMAJ_lbl_2 As label:
+            BorderColor: =RougeMH
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Height: =32
+            Size: =10
+            Text: |-
+                ="Date de dernière mise à jour: "
+            Visible: =_visiblePopupSupport
+            Width: =213
+            X: =370
+            Y: =519
+            ZIndex: =26
+
+        DateMAJValue_lbl_2 As label:
+            Align: =Align.Right
+            BorderColor: =RougeMH
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Height: =32
+            Size: =10
+            Text: =LastUpdate
+            Visible: =_visiblePopupSupport
+            Width: =98
+            X: =556
+            Y: =519
+            ZIndex: =27
+
+        Logo_8 As image:
+            BorderColor: =RougeMH
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisabledFill: =RGBA(244, 244, 244, 1)
+            Height: =40
+            Image: ='logo mh'
+            Visible: =_visiblePopupSupport
+            Width: =118
+            X: =315
+            Y: =270
+            ZIndex: =28
+
+        Label15_4 As label:
+            BorderColor: =RougeMH
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledColor: =RGBA(166, 166, 166, 1)
+            Size: =13
+            Text: ="@malakoffhumanis.com"
+            Visible: =_visiblePopupSupport
+            Width: =340
+            X: =553
+            Y: =388
+            ZIndex: =29
+
+    Form As form:
+        BorderColor: =RougeMH
+        DataSource: =varAuditEtControl
+        DefaultMode: =If(varRecord.ID = Blank(), FormMode.New, FormMode.Edit)
+        Height: =676
+        Item: |-
+            =If(Self.Mode = FormMode.Edit,
+                varRecord, 
+                Blank())
+        NumberOfColumns: =12
+        Width: =1366
+        Y: =92
+        ZIndex: =37
+
+        CommentaireDernierAudit_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="CommentaireDernierAudit"
+            Default: =ThisItem.CommentaireDernierAudit
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="CommentaireDernierAudit"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "CommentaireDernierAudit")
+            Required: =false
+            Update: =CommentaireDernierAudit_text.HtmlText
+            Width: =1356
+            X: =0
+            Y: =6
+            ZIndex: =1
+
+            CommentaireDernierAudit_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            CommentaireDernierAudit_text As richTextEditor:
+                BorderColor: =RougeMH
+                Default: =Parent.Default
+                Width: =1296
+                X: =30
+                Y: =50
+                ZIndex: =2
+
+        CompositionPortefeuilTitre As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Width: =1356
+            X: =0
+            Y: =8
+            ZIndex: =1
+
+            CompositionPortefeuilTitre_Label As label:
+                BorderColor: =RougeMH
+                Color: =RGBA(211, 66, 9, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisplayMode: =DisplayMode.View
+                Height: =56
+                PaddingBottom: =20
+                PaddingLeft: =20
+                PaddingTop: =20
+                Size: =20
+                Text: ="Composition portefeuille"
+                Width: =1356
+                Y: =20
+                ZIndex: =1
+
+        CompositionPortefeuil_Categorie_Header As typedDataCard.blankCard:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(211, 66, 9, 1)
+            Height: =50
+            Width: =339
+            X: =0
+            Y: =9
+            ZIndex: =1
+
+            CompositionPortefeuil_Categorie_Header_Label As label:
+                BorderColor: =RougeMH
+                Color: =RGBA(255, 255, 255, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =50
+                PaddingLeft: =20
+                Size: =13
+                Text: ="Catégorie"
+                Width: =339
+                ZIndex: =1
+
+        CompositionPortefeuil_Part_Header As typedDataCard.blankCard:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(211, 66, 9, 1)
+            Height: =19
+            Width: =339
+            X: =3
+            Y: =9
+            ZIndex: =1
+
+            CompositionPortefeuil_Part_Header_Label As label:
+                BorderColor: =RougeMH
+                Color: =RGBA(255, 255, 255, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =50
+                PaddingLeft: =20
+                Size: =13
+                Text: ="Part"
+                ZIndex: =1
+
+        CompositionPortefeuil_Assureur_Header As typedDataCard.blankCard:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(211, 66, 9, 1)
+            Height: =35
+            Width: =339
+            X: =6
+            Y: =9
+            ZIndex: =1
+
+            CompositionPortefeuil_Assureur_Header_Label As label:
+                BorderColor: =RougeMH
+                Color: =RGBA(255, 255, 255, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =50
+                PaddingLeft: =20
+                Size: =13
+                Text: ="Assureurs ex-périmètre"
+                Width: =216
+                ZIndex: =1
+
+        CompositionPortefeuil_Delegation_Header As typedDataCard.blankCard:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(211, 66, 9, 1)
+            Height: =42
+            Width: =339
+            X: =9
+            Y: =9
+            ZIndex: =1
+
+            CompositionPortefeuil_Delegation_Header_Label As label:
+                BorderColor: =RougeMH
+                Color: =RGBA(255, 255, 255, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =50
+                PaddingLeft: =20
+                Size: =13
+                Text: ="Type délégation"
+                Width: =200
+                ZIndex: =1
+
+        CompositionPortefeuil_SantePrevIndDontTNS_Header As typedDataCard.blankCard:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(211, 66, 9, 1)
+            Height: =171
+            Width: =339
+            X: =0
+            Y: =10
+            ZIndex: =1
+
+            CompositionPortefeuil_SantePrevIndDontTNS_Header_Label As label:
+                BorderColor: =RougeMH
+                Color: =RGBA(255, 255, 255, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =50
+                PaddingLeft: =20
+                Size: =13
+                Text: ="Santé/prev. ind. dont TNS"
+                Width: =300
+                ZIndex: =1
+
+        PartSantePrevIndTNS_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =0
+            DataField: ="PartSantePrevIndTNS"
+            Default: =ThisItem.PartSantePrevIndTNS
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="PartSantePrevIndTNS"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "PartSantePrevIndTNS")
+            Required: =false
+            Update: =PartSantePrevIndTNS_Value.Text
+            Width: =339
+            X: =3
+            Y: =10
+            ZIndex: =1
+
+            PartSantePrevIndTNS_Value As text:
+                BorderColor: =RougeMH
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                FocusedBorderThickness: =4
+                Format: =TextFormat.Number
+                HoverBorderColor: =RGBA(131, 24, 75, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(255, 211, 205, 1)
+                MaxLength: =3
+                PaddingLeft: =5
+                Reset: =true
+                Size: =13
+                Tooltip: =Parent.DisplayName
+                Width: =50
+                X: =(Parent.Width - Self.Width) / 2
+                Y: =(Parent.Height - Self.Height) / 2
+                ZIndex: =2
+
+        CompositionPortefeuil_SantePrevCollStandard_Header As typedDataCard.blankCard:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(211, 66, 9, 1)
+            Height: =171
+            Width: =339
+            X: =0
+            Y: =11
+            ZIndex: =1
+
+            CompositionPortefeuil_SantePrevCollStandard_Header_Label As label:
+                BorderColor: =RougeMH
+                Color: =RGBA(255, 255, 255, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =50
+                PaddingLeft: =20
+                Size: =13
+                Text: ="Santé/prev. coll. standard"
+                Width: =300
+                ZIndex: =1
+
+        CompositionPortefeuil_PrevIndHorsTNS_Header As typedDataCard.blankCard:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(211, 66, 9, 1)
+            Height: =171
+            Width: =339
+            X: =0
+            Y: =12
+            ZIndex: =1
+
+            CompositionPortefeuil_PrevIndHorsTNS_Header_Label As label:
+                BorderColor: =RougeMH
+                Color: =RGBA(255, 255, 255, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =50
+                PaddingLeft: =20
+                Size: =13
+                Text: ="Prév. ind. hors TNS"
+                Width: =300
+                ZIndex: =1
+
+        CompositionPortefeuil_SantePrevSurMesure_Header As typedDataCard.blankCard:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(211, 66, 9, 1)
+            Height: =171
+            Width: =339
+            X: =0
+            Y: =13
+            ZIndex: =1
+
+            CompositionPortefeuil_SantePrevSurMesure_Header_Label As label:
+                BorderColor: =RougeMH
+                Color: =RGBA(255, 255, 255, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =50
+                PaddingLeft: =20
+                Size: =13
+                Text: ="Santé/prev. sur mesure"
+                Width: =300
+                ZIndex: =1
+
+        CompositionPortefeuil_Emprunteur_Header As typedDataCard.blankCard:
+            BorderColor: =RGBA(255, 255, 255, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =1
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(211, 66, 9, 1)
+            Height: =200
+            Width: =339
+            X: =0
+            Y: =14
+            ZIndex: =1
+
+            CompositionPortefeuil_Emprunteur_Header_Label As label:
+                BorderColor: =RougeMH
+                Color: =RGBA(255, 255, 255, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =50
+                PaddingLeft: =20
+                Size: =13
+                Text: ="Emprunteur"
+                Width: =300
+                ZIndex: =1
+
+        TitreProductiviteEtSecuriteDesEchangesInfo As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =76
+            Width: =1356
+            X: =0
+            Y: =15
+            ZIndex: =1
+
+            SeparateurProductiviteEtSecuriteDesEchangesInfo_Titre As label:
+                BorderColor: =RougeMH
+                Color: =RGBA(211, 66, 9, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisplayMode: =DisplayMode.View
+                Height: =56
+                PaddingBottom: =20
+                PaddingLeft: =20
+                PaddingTop: =20
+                Size: =20
+                Text: ="Productivité et sécurité des échanges informatiques"
+                Width: =1356
+                Y: =20
+                ZIndex: =1
+
+        EspaceVide1 As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =678
+            X: =6
+            Y: =16
+            ZIndex: =1
+
+        EspaceVide2 As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =678
+            X: =6
+            Y: =17
+            ZIndex: =1
+
+        EspaceVide3 As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =104
+            Width: =678
+            X: =6
+            Y: =18
+            ZIndex: =1
+
+            Rectangle1_1 As rectangle:
+                BorderColor: =RGBA(246, 88, 16, 1)
+                BorderThickness: =3
+                DisplayMode: =DisplayMode.View
+                Fill: =RGBA(255, 255, 255, 1)
+                Height: =85
+                Width: =375
+                X: =156
+                Y: =16
+                ZIndex: =1
+
+            MoyenneGeneraleProductiviteEtSecuriteDesEchangesInfo_Label As label:
+                Align: =Align.Center
+                BorderColor: =RGBA(255, 255, 255, 1)
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisplayMode: =DisplayMode.View
+                Fill: =RGBA(255, 255, 255, 1)
+                FocusedBorderColor: =RGBA(9, 33, 98, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =32
+                Size: =12
+                Text: ="Moyennes générale"
+                Width: =185
+                X: =174
+                ZIndex: =2
+
+            MoyenneGeneraleProductiviteEtSecuriteDesEchangesInfo_Value As label:
+                Align: =Align.Center
+                BorderColor: =RGBA(131, 24, 75, 1)
+                Color: =RGBA(0, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisplayMode: =DisplayMode.View
+                FontWeight: =FontWeight.Bold
+                Height: =85
+                Size: =13
+                Text: =Text(Average(NotationNiveauDematPRDGSante, NotationNiveauDematPRDGPrevoyance, NotationNiveauDematPRDGCotisation, NotationNiveauDematPRDGContrats, NotationEvolutionRAD), "0.0") & " / 5"
+                Width: =375
+                X: =156
+                Y: =16
+                ZIndex: =3
+
+        EspaceVide4 As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =678
+            X: =6
+            Y: =19
+            ZIndex: =1
+
+        EspaceVide5 As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =678
+            X: =6
+            Y: =20
+            ZIndex: =1
+
+        TitreQualiteDeGestionEtSI As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =76
+            Width: =1356
+            X: =0
+            Y: =22
+            ZIndex: =1
+
+            TitreQualiteDeGestionEtSI_Titre As label:
+                BorderColor: =RougeMH
+                Color: =RGBA(211, 66, 9, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisplayMode: =DisplayMode.View
+                Height: =56
+                PaddingBottom: =20
+                PaddingLeft: =20
+                PaddingTop: =20
+                Size: =20
+                Text: ="Qualité de gestion et SI"
+                Width: =1356
+                Y: =20
+                ZIndex: =1
+
+        EspaceVide6 As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =678
+            X: =6
+            Y: =23
+            ZIndex: =1
+
+        EspaceVide7 As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =678
+            X: =6
+            Y: =24
+            ZIndex: =1
+
+        MoyenneGeneraleQualiteSI As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =106
+            Width: =678
+            X: =6
+            Y: =25
+            ZIndex: =1
+
+            Rectangle1 As rectangle:
+                BorderColor: =RGBA(246, 88, 16, 1)
+                BorderThickness: =3
+                DisplayMode: =DisplayMode.View
+                Fill: =RGBA(255, 255, 255, 1)
+                Height: =85
+                Width: =375
+                X: =171
+                Y: =16
+                ZIndex: =1
+
+            MoyenneGeneraleQualiteSI_Label As label:
+                Align: =Align.Center
+                BorderColor: =RGBA(255, 255, 255, 1)
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisplayMode: =DisplayMode.View
+                Fill: =RGBA(255, 255, 255, 1)
+                FocusedBorderColor: =RGBA(9, 33, 98, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =32
+                Size: =12
+                Text: ="Moyennes générale"
+                Width: =185
+                X: =189
+                ZIndex: =2
+
+            MoyenneGeneraleQualiteSI_Value As label:
+                Align: =Align.Center
+                BorderColor: =RGBA(131, 24, 75, 1)
+                Color: =RGBA(0, 0, 0, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisplayMode: =DisplayMode.View
+                FontWeight: =FontWeight.Bold
+                Height: =85
+                Size: =13
+                Text: =Text(Average(NoteQualitePrestationFSS_DataCard_Value, NoteQualitePrestationPREV_DataCard_Value, NoteRespectRecommandation_DataCard_Value, NotePriseEnCompteEvolutionDSN_DataCard_Value, NoteCapaciteAdaptationAuxEvoluti_DataCard_Value, NoteQualiteSI_DataCard_Value), "0.0") & " / 5"
+                Width: =375
+                X: =171
+                Y: =16
+                ZIndex: =3
+
+        EspaceVide9 As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =688
+            X: =6
+            Y: =26
+            ZIndex: =1
+
+        EspaceVide10 As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =678
+            X: =6
+            Y: =27
+            ZIndex: =1
+
+        EspaceVide11 As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Width: =678
+            X: =6
+            Y: =28
+            ZIndex: =1
+
+        SeparateurFinDeForm As typedDataCard.blankCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Width: =1356
+            X: =0
+            Y: =36
+            ZIndex: =1
+
+            Container1 As groupContainer.horizontalAutoLayoutContainer:
+                DisplayMode: =DisplayMode.Edit
+                Height: =100
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutGap: =20
+                LayoutJustifyContent: =LayoutJustifyContent.End
+                PaddingRight: =20
+                Width: =1356
+                ZIndex: =2
+
+                Button2 As button:
+                    BorderColor: =RGBA(230, 230, 230, 1)
+                    Color: =RGBA(0, 0, 0, 1)
+                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    DisabledFill: =RGBA(244, 244, 244, 1)
+                    Fill: =RGBA(230, 230, 230, 1)
+                    FontWeight: =FontWeight.Semibold
+                    HoverColor: =RGBA(255, 255, 255, 1)
+                    HoverFill: =ColorFade(RGBA(211, 66, 9, 1), -20%)
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Size: =15
+                    Text: ="Envoyer pour validation"
+                    Width: =300
+                    ZIndex: =1
+
+                Button1 As button:
+                    BorderColor: =RougeMH
+                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    DisabledFill: =RGBA(244, 244, 244, 1)
+                    Fill: =RougeMH
+                    FontWeight: =FontWeight.Semibold
+                    HoverColor: =RGBA(255, 255, 255, 1)
+                    HoverFill: =ColorFade(RGBA(211, 66, 9, 1), -20%)
+                    OnSelect: |-
+                        =SubmitForm(Form);
+                        Notify(
+                            "Merci pour votre participation ! Votre demande est enregistrée",
+                            Success
+                        )
+                    PressedFill: =White
+                    RadiusBottomLeft: =0
+                    RadiusBottomRight: =0
+                    RadiusTopLeft: =0
+                    RadiusTopRight: =0
+                    Size: =15
+                    Text: ="Enregistrer"
+                    X: =708
+                    Y: =76
+                    ZIndex: =2
+
+        DataCard1 As typedDataCard.blankCard:
+            BorderColor: =RGBA(131, 24, 75, 1)
+            BorderStyle: =BorderStyle.Solid
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =200
+            Width: =339
+            X: =0
+            Y: =34
+            ZIndex: =1
+
+        Titre_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Title"
+            Default: =ThisItem.Title
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Titre"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "Title")
+            Required: =true
+            Update: ="Titre"
+            Visible: =false
+            Width: =0
+            X: =0
+            Y: =0
+            ZIndex: =38
+
+        ReferenceDmAuditEtControl_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="ReferenceDmAuditEtControl"
+            Default: =Selected_Demd
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="ReferenceDmAuditEtControl"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "ReferenceDmAuditEtControl")
+            Required: =false
+            Update: =Selected_Demd
+            Visible: =false
+            Width: =0
+            X: =0
+            Y: =0
+            ZIndex: =38
+
+        ReferenceFrmAuditEtControl_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="ReferenceFrmAuditEtControl"
+            Default: |-
+                =If(Form.Mode = FormMode.Edit,
+                    ThisItem.ReferenceFrmAuditEtControl,
+                    Concatenate(
+                        "FormAuditEtControl",
+                        If(
+                            IsNumeric(CountRows(varAuditEtControl) + 1),
+                            Text(
+                                CountRows(varAuditEtControl) + 1,
+                                "[$-fr-FR]000"
+                            ),
+                            CountRows(varAuditEtControl) + 1
+                        )
+                    )
+                )
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="ReferenceFrmAuditEtControl"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "ReferenceFrmAuditEtControl")
+            Required: =false
+            Update: =DataCardValue3.Text
+            Visible: =false
+            Width: =0
+            X: =0
+            Y: =0
+            ZIndex: =38
+
+            ReferenceFrmAuditEtControl_DataCard_Value As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                FocusedBorderThickness: =4
+                HoverBorderColor: =RGBA(131, 24, 75, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(255, 211, 205, 1)
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =13
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                ZIndex: =2
+
+        NomCollaborateurFrmAECP_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NomCollaborateurFrmAECP"
+            Default: |-
+                =If(Form.Mode = FormMode.New,
+                    User().FullName,
+                    ThisItem.NomCollaborateurFrmAECP
+                )
+            DisplayMode: =DisplayMode.View
+            DisplayName: ="Nom du collaborateur"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NomCollaborateurFrmAECP")
+            Required: =false
+            Update: =NomCollaborateurFrmAECP_DataCard_Value.Text
+            Width: =452
+            X: =0
+            Y: =0
+            ZIndex: =38
+
+            NomCollaborateurFrmAECP_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NomCollaborateurFrmAECP_DataCard_Value As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                FocusedBorderThickness: =4
+                HoverBorderColor: =RGBA(131, 24, 75, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(255, 211, 205, 1)
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =13
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =NomCollaborateurFrmAECP_DataCard_Label.Y + NomCollaborateurFrmAECP_DataCard_Label.Height + 5
+                ZIndex: =2
+
+        ServiceOriginPartageInfo_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="ServiceOriginPartageInfo"
+            Default: ="Audit et contrôle permanent"
+            DisplayMode: =DisplayMode.View
+            DisplayName: ="Service à l'origine du partage d'information"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "ServiceOriginPartageInfo")
+            Required: =false
+            Update: =ServiceOriginPartageInfo_DataCard_Value.Text
+            Width: =452
+            X: =4
+            Y: =0
+            ZIndex: =38
+
+            ServiceOriginPartageInfo_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            ServiceOriginPartageInfo_DataCard_Value As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                FocusedBorderThickness: =4
+                HoverBorderColor: =RGBA(131, 24, 75, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(255, 211, 205, 1)
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =13
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =ServiceOriginPartageInfo_DataCard_Label.Y + ServiceOriginPartageInfo_DataCard_Label.Height + 5
+                ZIndex: =2
+
+        TypologieDelegation_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="TypologieDelegation"
+            Default: =ThisItem.TypologieDelegation
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Typologie de délégation"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "TypologieDelegation")
+            Required: =false
+            Update: =Concat(varTypologieDelegation, Value, ",")
+            Width: =1356
+            X: =0
+            Y: =1
+            ZIndex: =38
+
+            TypologieDelegation_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            GalleryTypologieDelegation As gallery.galleryVertical:
+                BorderColor: =RougeMH
+                Height: =50
+                Items: =typologieDelegation.Value
+                Layout: =Layout.Vertical
+                TemplatePadding: =0
+                TemplateSize: =If(Self.Layout = Layout.Horizontal, Min(280, Self.Width - 60), Min(280, Self.Height - 60))
+                Width: =1326
+                WrapCount: =5
+                X: =23
+                Y: =50
+                ZIndex: =2
+
+                GalleryTypologieDelegation_Checkbox As checkbox:
+                    BorderColor: =RougeMH
+                    CheckboxBorderColor: =RougeMH
+                    Color: =RGBA(0, 0, 0, 1)
+                    Default: =ThisItem.Value in varTypologieDelegation
+                    Height: =44
+                    HoverColor: =RougeMH
+                    OnCheck: =Collect(varTypologieDelegation, ThisItem)
+                    OnSelect: =Select(Parent)
+                    OnUncheck: =Remove(varTypologieDelegation, ThisItem)
+                    Size: =13
+                    Text: =ThisItem.Value
+                    ZIndex: =1
+
+        DateDernierAudit_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="DateDernierAudit"
+            Default: =ThisItem.DateDernierAudit
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Date du dernier audit"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =99
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "DateDernierAudit")
+            Required: =false
+            Update: =DateDernierAudit_DataCard_Value.SelectedDate
+            Width: =1366
+            X: =0
+            Y: =2
+            ZIndex: =38
+
+            DateDernierAudit_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DateDernierAudit_DataCard_Value As datepicker:
+                BorderColor: =RougeMH
+                CalendarHeaderFill: =RGBA(211, 66, 9, 1)
+                Color: =RGBA(0, 0, 0, 1)
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                HoverDateFill: =RGBA(255, 211, 205, 1)
+                IconBackground: =RGBA(211, 66, 9, 1)
+                SelectedDateFill: =RGBA(211, 66, 9, 1)
+                Size: =13
+                Width: =279
+                X: =30
+                Y: =44
+                ZIndex: =5
+
+        ThematiqueDernierAudit_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="ThematiqueDernierAudit"
+            Default: =ThisItem.ThematiqueDernierAudit
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Thématique traitées lors de cet audit"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =221
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "ThematiqueDernierAudit")
+            Required: =false
+            Update: =ThematiqueDernierAudit_DataCard_Value.HtmlText
+            Width: =1356
+            X: =0
+            Y: =3
+            ZIndex: =38
+
+            ThematiqueDernierAudit_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            ThematiqueDernierAudit_DataCard_Value As richTextEditor:
+                BorderColor: =RougeMH
+                Default: =Parent.Default
+                Height: =157
+                Width: =1306
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+        NombreRecommandation_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NombreRecommandation"
+            Default: =ThisItem.NombreRecommandation
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Nombre de recommandations non mises en oeuvre par le DG et criticités associées"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =90
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NombreRecommandation")
+            Required: =false
+            Update: =NombreRecommandation_DataCard_Value.Text
+            Width: =1356
+            X: =0
+            Y: =4
+            ZIndex: =38
+
+            NombreRecommandation_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NombreRecommandation_DataCard_Value As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                FocusedBorderThickness: =4
+                Format: =TextFormat.Number
+                HoverBorderColor: =RGBA(131, 24, 75, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(255, 211, 205, 1)
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =13
+                Tooltip: =Parent.DisplayName
+                Width: |
+                    =60
+                X: =30
+                Y: =NombreRecommandation_DataCard_Label.Y + NombreRecommandation_DataCard_Label.Height + 5
+                ZIndex: =2
+
+        NoteDernierAudit_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteDernierAudit"
+            Default: =If(NotationQualiteDernierAudit_NonConcerne.Value, 0, ThisItem.NoteDernierAudit)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="Qualification du dernier audit"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =92
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteDernierAudit")
+            Required: =false
+            Update: =NotationQualiteDernierAudit
+            Width: =1356
+            X: =0
+            Y: =5
+            ZIndex: =38
+
+            QualificationDernierAuditLabel As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =24
+                Y: =20
+                ZIndex: =1
+
+            NotationQualiteDernierAudit_NonConcerne As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneDernierAudit
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NotationQualiteDernierAudit)
+                OnUncheck: =Reset(NotationQualiteDernierAudit)
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =265
+                Y: =44
+                ZIndex: =1
+
+            NotationQualiteDernierAudit As rating:
+                BorderColor: =RGBA(246, 88, 16, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                ContentLanguage: =""
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NotationQualiteDernierAudit_NonConcerne.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =0
+                Height: =32
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(246, 88, 16, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =6
+
+        PerimetreAssureur_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="PerimetreAssureur"
+            Default: =ThisItem.PerimetreAssureur
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="PerimetreAssureur"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "PerimetreAssureur")
+            Required: =false
+            Update: =Concat(varPerimetreAssureur, Value, ",")
+            Width: =1356
+            X: =0
+            Y: =7
+            ZIndex: =38
+
+            PerimetreAssureur_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            GalleryPerimetreAssureur As gallery.galleryVertical:
+                BorderColor: =RougeMH
+                Height: =50
+                Items: =perimetreAssureur.Value
+                Layout: =Layout.Vertical
+                TemplatePadding: =0
+                TemplateSize: =48
+                Width: =1315
+                WrapCount: =5
+                X: =23
+                Y: =50
+                ZIndex: =2
+
+                GalleryPerimetreAssureur_Checkbox As checkbox:
+                    BorderColor: =RougeMH
+                    CheckboxBorderColor: =RougeMH
+                    Color: =RGBA(0, 0, 0, 1)
+                    Default: =ThisItem.Value in varPerimetreAssureur
+                    Height: =44
+                    HoverColor: =RougeMH
+                    OnCheck: =Collect(varPerimetreAssureur, ThisItem)
+                    OnSelect: =Select(Parent)
+                    OnUncheck: =Remove(varPerimetreAssureur, ThisItem)
+                    Size: =13
+                    Text: =ThisItem.Value
+                    ZIndex: =1
+
+        AssureurSantePrevIndTNS_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="AssureurSantePrevIndTNS"
+            Default: =ThisItem.AssureurSantePrevIndTNS
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="AssureurSantePrevIndTNS"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "AssureurSantePrevIndTNS")
+            Required: =false
+            Update: =Concat(varAssureurSantePrevIndTNS, Value, ",")
+            Width: =339
+            X: =6
+            Y: =10
+            ZIndex: =38
+
+            GalleryAssureurSantePrevIndTNS As gallery.galleryVertical:
+                BorderColor: =RougeMH
+                Height: =171
+                Items: =perimetreAssureur
+                Layout: =Layout.Vertical
+                TemplateSize: =50
+                Width: =339
+                ZIndex: =1
+
+                GalleryAssureurSantePrevIndTNS_Checkbox As checkbox:
+                    BorderColor: =RougeMH
+                    CheckboxBorderColor: =RougeMH
+                    Color: =RGBA(0, 0, 0, 1)
+                    Default: =ThisItem.Value in varAssureurSantePrevIndTNS
+                    HoverColor: =RougeMH
+                    OnCheck: =Collect(varAssureurSantePrevIndTNS, ThisItem)
+                    OnSelect: =Select(Parent)
+                    OnUncheck: =Remove(varAssureurSantePrevIndTNS, ThisItem)
+                    Size: =13
+                    Text: =ThisItem.Value
+                    ZIndex: =1
+
+        DelegationSantePrevIndTNS_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="DelegationSantePrevIndTNS"
+            Default: =ThisItem.DelegationSantePrevIndTNS Or 0
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="DelegationSantePrevIndTNS"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =170
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "DelegationSantePrevIndTNS")
+            Required: =false
+            Update: =Concat(varDelegationSantePrevIndTNS, Value, ",")
+            Width: =339
+            X: =9
+            Y: =10
+            ZIndex: =38
+
+            GalleryDelegationSantePrevIndTNS As gallery.galleryVertical:
+                BorderColor: =RougeMH
+                Height: =171
+                Items: =typologieDelegation
+                Layout: =Layout.Vertical
+                TemplateSize: |
+                    =50
+                Width: =339
+                ZIndex: =1
+
+                GalleryDelegationSantePrevIndTNS_Checkbox As checkbox:
+                    BorderColor: =RougeMH
+                    CheckboxBorderColor: =RougeMH
+                    Color: =RGBA(0, 0, 0, 1)
+                    Default: =ThisItem.Value in varDelegationSantePrevIndTNS
+                    HoverColor: =RougeMH
+                    OnCheck: =Collect(varDelegationSantePrevIndTNS, ThisItem)
+                    OnSelect: =Select(Parent)
+                    OnUncheck: =Remove(varDelegationSantePrevIndTNS, ThisItem)
+                    Size: =13
+                    Text: =ThisItem.Value
+                    ZIndex: =1
+
+        PartSantePrevCollStandard_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="PartSantePrevCollStandard"
+            Default: =ThisItem.PartSantePrevCollStandard
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="PartSantePrevCollStandard"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =171
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "PartSantePrevCollStandard")
+            Required: =false
+            Update: =PartSantePrevCollStandard_DataCard_Value.Text
+            Width: =339
+            X: =3
+            Y: =11
+            ZIndex: =38
+
+            PartSantePrevCollStandard_DataCard_Value As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                FocusedBorderThickness: =4
+                HoverBorderColor: =RGBA(131, 24, 75, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(255, 211, 205, 1)
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =13
+                Tooltip: =Parent.DisplayName
+                Width: |
+                    =50
+                X: =(Parent.Width - Self.Width) / 2
+                Y: =(Parent.Height - Self.Height) / 2
+                ZIndex: =2
+
+        AssureurSantePrevCollStandard_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="AssureurSantePrevCollStandard"
+            Default: =ThisItem.AssureurSantePrevCollStandard
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="AssureurSantePrevCollStandard"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =171
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "AssureurSantePrevCollStandard")
+            Required: =false
+            Update: =Concat(varAssureurSantePrevCollStandard, Value, ",")
+            Width: =339
+            X: =6
+            Y: =11
+            ZIndex: =38
+
+            GalleryAssureurSantePrevCollStandard As gallery.galleryVertical:
+                BorderColor: =RougeMH
+                Height: =171
+                Items: =perimetreAssureur
+                Layout: =Layout.Vertical
+                TemplateSize: =50
+                Width: =339
+                ZIndex: =1
+
+                GalleryAssureurSantePrevCollStandard_Checkbox As checkbox:
+                    BorderColor: =RougeMH
+                    CheckboxBorderColor: =RougeMH
+                    Color: =RGBA(0, 0, 0, 1)
+                    Default: =ThisItem.Value in varAssureurSantePrevCollStandard
+                    HoverColor: =RougeMH
+                    OnCheck: =Collect(varAssureurSantePrevCollStandard, ThisItem)
+                    OnSelect: =Select(Parent)
+                    OnUncheck: =Remove(varAssureurSantePrevCollStandard, ThisItem)
+                    Size: =13
+                    Text: =ThisItem.Value
+                    ZIndex: =1
+
+        DelegationSantePrevCollStandard_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="DelegationSantePrevCollStandard"
+            Default: =ThisItem.DelegationSantePrevCollStandard
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="DelegationSantePrevCollStandard"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =171
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "DelegationSantePrevCollStandard")
+            Required: =false
+            Update: =Concat(varDelegationSantePrevCollStandard, Value, ",")
+            Width: =339
+            X: =9
+            Y: =11
+            ZIndex: =38
+
+            GalleryDelegationSantePrevCollStandard As gallery.galleryVertical:
+                BorderColor: =RougeMH
+                Height: =171
+                Items: =typologieDelegation
+                Layout: =Layout.Vertical
+                TemplateSize: |
+                    =50
+                Width: =339
+                ZIndex: =1
+
+                GalleryDelegationSantePrevCollStandard_Checkbox As checkbox:
+                    BorderColor: =RougeMH
+                    CheckboxBorderColor: =RougeMH
+                    Color: =RGBA(0, 0, 0, 1)
+                    Default: =ThisItem.Value in varDelegationSantePrevCollStandard
+                    HoverColor: =RougeMH
+                    OnCheck: =Collect(varDelegationSantePrevCollStandard, ThisItem)
+                    OnSelect: =Select(Parent)
+                    OnUncheck: =Remove(varDelegationSantePrevCollStandard, ThisItem)
+                    Size: =13
+                    Text: =ThisItem.Value
+                    ZIndex: =1
+
+        PartPrevIndHorsTNS_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="PartPrevIndHorsTNS"
+            Default: =ThisItem.PartPrevIndHorsTNS
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="PartPrevIndHorsTNS"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =171
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "PartPrevIndHorsTNS")
+            Required: =false
+            Update: =PartPrevIndHorsTNS_Value.Text
+            Width: =339
+            X: =3
+            Y: =12
+            ZIndex: =38
+
+            PartPrevIndHorsTNS_Value As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                FocusedBorderThickness: =4
+                HoverBorderColor: =RGBA(131, 24, 75, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(255, 211, 205, 1)
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =13
+                Tooltip: =Parent.DisplayName
+                Width: =50
+                X: =(Parent.Width - Self.Width) / 2
+                Y: =(Parent.Height - Self.Height) / 2
+                ZIndex: =2
+
+        AssureurPrevIndHorsTNS_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="AssureurPrevIndHorsTNS"
+            Default: =ThisItem.AssureurPrevIndHorsTNS
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="AssureurPrevIndHorsTNS"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "AssureurPrevIndHorsTNS")
+            Required: =false
+            Update: =Concat(varAssureurPrevIndHorsTNS, Value, ",")
+            Width: =339
+            X: =6
+            Y: =12
+            ZIndex: =38
+
+            GalleryAssureurPrevIndHorsTNS As gallery.galleryVertical:
+                BorderColor: =RougeMH
+                Height: =171
+                Items: =perimetreAssureur
+                Layout: =Layout.Vertical
+                TemplateSize: =50
+                Width: =339
+                ZIndex: =5
+
+                GalleryAssureurPrevIndHorsTNS_Checkbox As checkbox:
+                    BorderColor: =RougeMH
+                    CheckboxBorderColor: =RougeMH
+                    Color: =RGBA(0, 0, 0, 1)
+                    Default: =ThisItem.Value in varAssureurPrevIndHorsTNS
+                    HoverColor: =RougeMH
+                    OnCheck: =Collect(varAssureurPrevIndHorsTNS, ThisItem)
+                    OnSelect: =Select(Parent)
+                    OnUncheck: =Remove(varAssureurPrevIndHorsTNS, ThisItem)
+                    Size: =13
+                    Text: =ThisItem.Value
+                    ZIndex: =1
+
+        DelegationPrevIndHorsTNS_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="DelegationPrevIndHorsTNS"
+            Default: =ThisItem.DelegationPrevIndHorsTNS
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="DelegationPrevIndHorsTNS"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =171
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "DelegationPrevIndHorsTNS")
+            Required: =false
+            Update: =Concat(varDelegationPrevIndHorsTNS, Value, ",")
+            Width: =339
+            X: =9
+            Y: =12
+            ZIndex: =38
+
+            GalleryDelegationPrevIndHorsTNS As gallery.galleryVertical:
+                BorderColor: =RougeMH
+                Height: =171
+                Items: =typologieDelegation
+                Layout: =Layout.Vertical
+                TemplateSize: |
+                    =50
+                Width: =339
+                ZIndex: =5
+
+                GalleryDelegationPrevIndHorsTNS_Checkbox As checkbox:
+                    BorderColor: =RougeMH
+                    CheckboxBorderColor: =RougeMH
+                    Color: =RGBA(0, 0, 0, 1)
+                    Default: =ThisItem.Value in varDelegationPrevIndHorsTNS
+                    HoverColor: =RougeMH
+                    OnCheck: =Collect(varDelegationPrevIndHorsTNS, ThisItem)
+                    OnSelect: =Select(Parent)
+                    OnUncheck: =Remove(varDelegationPrevIndHorsTNS, ThisItem)
+                    Size: =13
+                    Text: =ThisItem.Value
+                    ZIndex: =1
+
+        PartSantePrevSurMesure_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="PartSantePrevSurMesure"
+            Default: =ThisItem.PartSantePrevSurMesure
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="PartSantePrevSurMesure"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =171
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "PartSantePrevSurMesure")
+            Required: =false
+            Update: =PartSantePrevSurMesure_Value.Text
+            Width: =339
+            X: =3
+            Y: =13
+            ZIndex: =38
+
+            PartSantePrevSurMesure_Value As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                FocusedBorderThickness: =4
+                HoverBorderColor: =RGBA(131, 24, 75, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(255, 211, 205, 1)
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =13
+                Tooltip: =Parent.DisplayName
+                Width: =50
+                X: =(Parent.Width - Self.Width) / 2
+                Y: =(Parent.Height - Self.Height) / 2
+                ZIndex: =2
+
+        AssureurSantePrevSurMesure_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="AssureurSantePrevSurMesure"
+            Default: =ThisItem.AssureurSantePrevSurMesure
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="AssureurSantePrevSurMesure"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =171
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "AssureurSantePrevSurMesure")
+            Required: =false
+            Update: =Concat(varAssureurSantePrevSurMesure, Value, ",")
+            Width: =339
+            X: =6
+            Y: =13
+            ZIndex: =38
+
+            GalleryAssureurSantePrevSurMesure As gallery.galleryVertical:
+                BorderColor: =RougeMH
+                Height: =198
+                Items: =perimetreAssureur
+                Layout: =Layout.Vertical
+                TemplateSize: =50
+                Width: =339
+                ZIndex: =1
+
+                GalleryAssureurSantePrevSurMesure_Checkbox As checkbox:
+                    BorderColor: =RougeMH
+                    CheckboxBorderColor: =RougeMH
+                    Color: =RGBA(0, 0, 0, 1)
+                    Default: =ThisItem.Value in varAssureurSantePrevSurMesure
+                    HoverColor: =RougeMH
+                    OnCheck: =Collect(varAssureurSantePrevSurMesure, ThisItem)
+                    OnSelect: =Select(Parent)
+                    OnUncheck: =Remove(varAssureurSantePrevSurMesure, ThisItem)
+                    Size: =13
+                    Text: =ThisItem.Value
+                    ZIndex: =1
+
+        DelegationSantePrevSurMesure_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="DelegationSantePrevSurMesure"
+            Default: =ThisItem.DelegationSantePrevSurMesure
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="DelegationSantePrevSurMesure"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =171
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "DelegationSantePrevSurMesure")
+            Required: =false
+            Update: =Concat(varDelegationSantePrevSurMesure, Value, ",")
+            Width: =339
+            X: =9
+            Y: =13
+            ZIndex: =38
+
+            GalleryDelegationSantePrevSurMesure As gallery.galleryVertical:
+                BorderColor: =RougeMH
+                Height: =171
+                Items: =typologieDelegation
+                Layout: =Layout.Vertical
+                TemplateSize: |
+                    =50
+                Width: =339
+                ZIndex: =5
+
+                GalleryDelegationSantePrevSurMesure_Checkbox As checkbox:
+                    BorderColor: =RougeMH
+                    CheckboxBorderColor: =RougeMH
+                    Color: =RGBA(0, 0, 0, 1)
+                    Default: =ThisItem.Value in varDelegationSantePrevSurMesure
+                    HoverColor: =RougeMH
+                    OnCheck: =Collect(varDelegationSantePrevSurMesure, ThisItem)
+                    OnSelect: =Select(Parent)
+                    OnUncheck: =Remove(varDelegationSantePrevSurMesure, ThisItem)
+                    Size: =13
+                    Text: =ThisItem.Value
+                    ZIndex: =1
+
+        PartEmprunteur_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="PartEmprunteur"
+            Default: =ThisItem.PartEmprunteur
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="PartEmprunteur"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "PartEmprunteur")
+            Required: =false
+            Update: =PartEmprunteur_Value.Text
+            Width: =339
+            X: =3
+            Y: =14
+            ZIndex: =38
+
+            PartEmprunteur_Value As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                FocusedBorderThickness: =4
+                HoverBorderColor: =RGBA(131, 24, 75, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(255, 211, 205, 1)
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =13
+                Tooltip: =Parent.DisplayName
+                Width: =50
+                X: =(Parent.Width - Self.Width) / 2
+                Y: =(Parent.Height - Self.Height) / 2
+                ZIndex: =2
+
+        AssureurEmprunteur_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="AssureurEmprunteur"
+            Default: =ThisItem.AssureurEmprunteur
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="AssureurEmprunteur"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "AssureurEmprunteur")
+            Required: =false
+            Update: =Concat(varAssureurEmprunteur, Value, ",")
+            Width: =339
+            X: =6
+            Y: =14
+            ZIndex: =38
+
+            GalleryAssureurEmprunteur As gallery.galleryVertical:
+                BorderColor: =RougeMH
+                Height: =201
+                Items: =perimetreAssureur
+                Layout: =Layout.Vertical
+                TemplateSize: =50
+                Width: =339
+                ZIndex: =1
+
+                GalleryAssureurEmprunteur_Checkbox As checkbox:
+                    BorderColor: =RougeMH
+                    CheckboxBorderColor: =RougeMH
+                    Color: =RGBA(0, 0, 0, 1)
+                    Default: =ThisItem.Value in varAssureurEmprunteur
+                    HoverColor: =RougeMH
+                    OnCheck: =Collect(varAssureurEmprunteur, ThisItem)
+                    OnSelect: =Select(Parent)
+                    OnUncheck: =Remove(varAssureurEmprunteur, ThisItem)
+                    Size: =13
+                    Text: =ThisItem.Value
+                    ZIndex: =1
+
+        DelegationEmprunteur_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="DelegationEmprunteur"
+            Default: =ThisItem.DelegationEmprunteur
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="DelegationEmprunteur"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "DelegationEmprunteur")
+            Required: =false
+            Update: =Concat(varDelegationEmprunteur, Value, ",")
+            Width: =339
+            X: =9
+            Y: =14
+            ZIndex: =38
+
+            GalleryDelegationEmprunteur As gallery.galleryVertical:
+                BorderColor: =RougeMH
+                Height: =171
+                Items: =typologieDelegation
+                Layout: =Layout.Vertical
+                TemplateSize: |
+                    =50
+                Width: =339
+                ZIndex: =5
+
+                GalleryDelegationEmprunteur_Checkbox As checkbox:
+                    BorderColor: =RougeMH
+                    CheckboxBorderColor: =RougeMH
+                    Color: =RGBA(0, 0, 0, 1)
+                    Default: =ThisItem.Value in varDelegationEmprunteur
+                    HoverColor: =RougeMH
+                    OnCheck: =Collect(varDelegationEmprunteur, ThisItem)
+                    OnSelect: =Select(Parent)
+                    OnUncheck: =Remove(varDelegationEmprunteur, ThisItem)
+                    Size: =13
+                    Text: =ThisItem.Value
+                    ZIndex: =1
+
+        NoteNiveauDematPRDGSante_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteNiveauDematPRDGSante"
+            Default: =If(NoteNiveauDematPRDGSante_DataCard_NonConcerne.Value, 0, ThisItem.NoteNiveauDematPRDGSante)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NoteNiveauDematPRDGSante"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteNiveauDematPRDGSante")
+            Required: =false
+            Update: =NotationNiveauDematPRDGSante.Value
+            Width: =678
+            X: =0
+            Y: =16
+            ZIndex: =38
+
+            NoteNiveauDematPRDGSante_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Niveau démat en flux PRDG santé"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NoteNiveauDematPRDGSante_DataCard_NonConcerne As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneDematPRDGSante
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NotationNiveauDematPRDGSante)
+                OnUncheck: =Reset(NotationNiveauDematPRDGSante)
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =265
+                Y: =44
+                ZIndex: =1
+
+            NotationNiveauDematPRDGSante As rating:
+                BorderColor: =RGBA(211, 66, 9, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NoteNiveauDematPRDGSante_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =2
+                Height: =40
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(211, 66, 9, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =2
+
+        NoteNiveauDematPRDGPrevoyance_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteNiveauDematPRDGPrevoyance"
+            Default: =If(NoteNiveauDematPRDGPrevoyance_DataCard_NonConcern.Value, 0, ThisItem.NoteNiveauDematPRDGPrevoyance)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NoteNiveauDematPRDGPrevoyance"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteNiveauDematPRDGPrevoyance")
+            Required: =false
+            Update: =NotationNiveauDematPRDGPrevoyance.Value
+            Width: =678
+            WidthFit: =false
+            X: =0
+            Y: =17
+            ZIndex: =38
+
+            NoteNiveauDematPRDGPrevoyance_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Niveau démat en flux PRDG prévoyance"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NoteNiveauDematPRDGPrevoyance_DataCard_NonConcern As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneDematPRDGPrev
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NotationNiveauDematPRDGPrevoyance)
+                OnUncheck: =Reset(NotationNiveauDematPRDGPrevoyance)
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =265
+                Y: =44
+                ZIndex: =1
+
+            NotationNiveauDematPRDGPrevoyance As rating:
+                BorderColor: =RGBA(211, 66, 9, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NoteNiveauDematPRDGPrevoyance_DataCard_NonConcern.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =2
+                Height: =40
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(211, 66, 9, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+        NoteNiveauDematPRDGContrats_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteNiveauDematPRDGContrats"
+            Default: =If(NoteNiveauDematPRDGContrats_DataCard_NonConcerne.Value, 0, ThisItem.NoteNiveauDematPRDGContrats)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NoteNiveauDematPRDGContrats"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteNiveauDematPRDGContrats")
+            Required: =false
+            Update: =NotationNiveauDematPRDGContrats.Value
+            Width: =678
+            X: =0
+            Y: =18
+            ZIndex: =38
+
+            NoteNiveauDematPRDGContrats_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Niveau démat en flux PRDG cotisation"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NotationNiveauDematPRDGContrats As rating:
+                BorderColor: =RGBA(211, 66, 9, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NoteNiveauDematPRDGCotisation_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =2
+                Height: =40
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(211, 66, 9, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+            NoteNiveauDematPRDGCotisation_DataCard_NonConcerne As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneDematPRDGCotisation
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NotationNiveauDematPRDGCotisation)
+                OnUncheck: =Reset(NotationNiveauDematPRDGCotisation)
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =265
+                Y: =50
+                ZIndex: =6
+
+        NoteNiveauDematPRDGCotisation_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteNiveauDematPRDGCotisation"
+            Default: =If(NoteNiveauDematPRDGCotisation_DataCard_NonConcerne.Value, 0, ThisItem.NoteNiveauDematPRDGCotisation)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NoteNiveauDematPRDGCotisation"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteNiveauDematPRDGCotisation")
+            Required: =false
+            Update: =NotationNiveauDematPRDGCotisation.Value
+            Width: =678
+            X: =0
+            Y: =19
+            ZIndex: =38
+
+            NoteNiveauDematPRDGCotisation_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Niveau démat en flux PRDG en ref contrats"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NotationNiveauDematPRDGCotisation As rating:
+                BorderColor: =RGBA(211, 66, 9, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NoteNiveauDematPRDGContrats_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =2
+                Height: =40
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(211, 66, 9, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+            NoteNiveauDematPRDGContrats_DataCard_NonConcerne As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneDematPRDGContrats
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NotationNiveauDematPRDGContrats)
+                OnUncheck: =Reset(NotationNiveauDematPRDGContrats)
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =265
+                Y: =50
+                ZIndex: =6
+
+        NoteEvolutionRAD_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteEvolutionRAD"
+            Default: =If(NoteEvolutionRAD_DataCard_NonConcerne.Value, 0, ThisItem.NoteEvolutionRAD)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NoteEvolutionRAD"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteEvolutionRAD")
+            Required: =false
+            Update: =NotationEvolutionRAD.Value
+            Width: =678
+            X: =0
+            Y: =20
+            ZIndex: =38
+
+            NoteEvolutionRAD_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Evolution RAD"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NoteEvolutionRAD_DataCard_NonConcerne As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneEvolutionRAD
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NotationEvolutionRAD)
+                OnUncheck: =Reset(NotationEvolutionRAD)
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =265
+                Y: =44
+                ZIndex: =1
+
+            NotationEvolutionRAD As rating:
+                BorderColor: =RGBA(211, 66, 9, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NoteEvolutionRAD_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =2
+                Height: =40
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(211, 66, 9, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+        CommentaireProdEtSecuriteEchange_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="CommentaireProdEtSecuriteEchange"
+            Default: =ThisItem.CommentaireProdEtSecuriteEchange
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="CommentaireProdEtSecuriteEchange"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =283
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "CommentaireProdEtSecuriteEchange")
+            Required: =false
+            Update: =CommentaireProdEtSecuriteEchange_DataCard_Value.HtmlText
+            Width: =1356
+            X: =0
+            Y: =21
+            ZIndex: =38
+
+            CommentaireProdEtSecuriteEchange_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Commentaires productivité et sécurité des échanges informatiques"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            CommentaireProdEtSecuriteEchange_DataCard_Value As richTextEditor:
+                BorderColor: =RougeMH
+                Default: =Parent.Default
+                Height: =216
+                Width: =1306
+                X: =30
+                Y: =55
+                ZIndex: =5
+
+        NoteQualitePrestationFSS_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteQualitePrestationFSS"
+            Default: =If(NoteQualitePrestationFSS_DataCard_NonConcerne.Value, 0, ThisItem.NoteQualitePrestationFSS)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NoteQualitePrestationFSS"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteQualitePrestationFSS")
+            Required: =false
+            Update: =NoteQualitePrestationFSS_DataCard_Value.Value
+            Width: =678
+            X: =0
+            Y: =23
+            ZIndex: =38
+
+            NoteQualitePrestationFSS_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Qualité et justesse des prestations payées à distinguer FSS"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NoteQualitePrestationFSS_DataCard_Value As rating:
+                BorderColor: =RGBA(211, 66, 9, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NoteQualitePrestationFSS_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =2
+                Height: =40
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(211, 66, 9, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+            NoteQualitePrestationFSS_DataCard_NonConcerne As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneQAPrestaFSS
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NoteQualitePrestationFSS_DataCard_Value)
+                OnSelect: =
+                OnUncheck: =Reset(NoteQualitePrestationFSS_DataCard_Value);
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =265
+                Y: =50
+                ZIndex: =6
+
+        NoteQualitePrestationPREV_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteQualitePrestationPREV"
+            Default: =If(NoteQualitePrestationPREV_DataCard_NonConcerne.Value, 0, ThisItem.NoteQualitePrestationPREV)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NoteQualitePrestationPREV"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteQualitePrestationPREV")
+            Required: =false
+            Update: =NoteQualitePrestationPREV_DataCard_Value.Value
+            Width: =678
+            X: =0
+            Y: =24
+            ZIndex: =38
+
+            NoteQualitePrestationPREV_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Qualité et justesse des prestations payées à distinguer PREV"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NoteQualitePrestationPREV_DataCard_NonConcerne As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneQAPrestaPrev
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NoteQualitePrestationPREV_DataCard_Value)
+                OnUncheck: =Reset(NoteQualitePrestationPREV_DataCard_Value)
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =265
+                Y: =44
+                ZIndex: =1
+
+            NoteQualitePrestationPREV_DataCard_Value As rating:
+                BorderColor: =RGBA(211, 66, 9, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NoteQualitePrestationPREV_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =2
+                Height: =40
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(211, 66, 9, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+        NoteRespectRecommandation_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteRespectRecommandation"
+            Default: =If(NoteRespectRecommandation_DataCard_NonConcerne.Value, 0, ThisItem.NoteRespectRecommandation)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NoteRespectRecommandation"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteRespectRecommandation")
+            Required: =false
+            Update: =NoteRespectRecommandation_DataCard_Value.Value
+            Width: =678
+            X: =0
+            Y: =25
+            ZIndex: =38
+
+            NoteRespectRecommandation_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Respect des recommandations"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NoteRespectRecommandation_DataCard_NonConcerne As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneRespectReco
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NoteRespectRecommandation_DataCard_Value)
+                OnUncheck: =Reset(NoteRespectRecommandation_DataCard_Value)
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =265
+                Y: =44
+                ZIndex: =1
+
+            NoteRespectRecommandation_DataCard_Value As rating:
+                BorderColor: =RGBA(211, 66, 9, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NoteRespectRecommandation_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =2
+                Height: =40
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(211, 66, 9, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+        NotePriseEnCompteEvolutionDSN_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NotePriseEnCompteEvolutionDSN"
+            Default: =If(NotePriseEnCompteEvolutionDSN_DataCard_NonConcerne.Value, 0, ThisItem.NotePriseEnCompteEvolutionDSN)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NotePriseEnCompteEvolutionDSN"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NotePriseEnCompteEvolutionDSN")
+            Required: =false
+            Update: =NotePriseEnCompteEvolutionDSN_DataCard_Value.Value
+            Width: =678
+            X: =0
+            Y: =26
+            ZIndex: =38
+
+            NotePriseEnCompteEvolutionDSN_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Prise en compte des évolutions DSN notamment Télérèglement"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NotePriseEnCompteEvolutionDSN_DataCard_NonConcerne As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneEvoDSN
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NotePriseEnCompteEvolutionDSN_DataCard_Value)
+                OnUncheck: =Reset(NotePriseEnCompteEvolutionDSN_DataCard_Value)
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =265
+                Y: =44
+                ZIndex: =1
+
+            NotePriseEnCompteEvolutionDSN_DataCard_Value As rating:
+                BorderColor: =RGBA(211, 66, 9, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NotePriseEnCompteEvolutionDSN_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =2
+                Height: =40
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(211, 66, 9, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+        NoteCapaciteAdaptationAuxEvoluti_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteCapaciteAdaptationAuxEvoluti"
+            Default: =If(NoteCapaciteAdaptationAuxEvoluti_DataCard_NonConcerne.Value, 0, ThisItem.NoteCapaciteAdaptationAuxEvoluti)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NoteCapaciteAdaptationAuxEvoluti"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteCapaciteAdaptationAuxEvoluti")
+            Required: =false
+            Update: =NoteCapaciteAdaptationAuxEvoluti_DataCard_Value.Value
+            Width: =678
+            X: =0
+            Y: =27
+            ZIndex: =38
+
+            NoteCapaciteAdaptationAuxEvoluti_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Capacité à s'adapter aux évolutions réglementaires"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NoteCapaciteAdaptationAuxEvoluti_DataCard_NonConcerne As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneCapaciteAdaptation
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NoteCapaciteAdaptationAuxEvoluti_DataCard_Value)
+                OnUncheck: =Reset(NoteCapaciteAdaptationAuxEvoluti_DataCard_Value)
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =265
+                Y: =44
+                ZIndex: =1
+
+            NoteCapaciteAdaptationAuxEvoluti_DataCard_Value As rating:
+                BorderColor: =RGBA(211, 66, 9, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NoteCapaciteAdaptationAuxEvoluti_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =2
+                Height: =40
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(211, 66, 9, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+        NoteQualiteSI_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteQualiteSI"
+            Default: =If(NoteQualiteSI_DataCard_NonConcerne.Value, 0, ThisItem.NoteQualiteSI)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NoteQualiteSI"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteQualiteSI")
+            Required: =false
+            Update: =NoteQualiteSI_DataCard_Value.Value
+            Width: =678
+            X: =0
+            Y: =28
+            ZIndex: =38
+
+            NoteQualiteSI_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Qualité du SI"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NoteQualiteSI_DataCard_NonConcerne As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneQualiteSI
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NoteQualiteSI_DataCard_Value)
+                OnUncheck: =Reset(NoteQualiteSI_DataCard_Value)
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =263
+                Y: =50
+                ZIndex: =1
+
+            NoteQualiteSI_DataCard_Value As rating:
+                BorderColor: =RGBA(211, 66, 9, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NoteQualiteSI_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =2
+                Height: =40
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(211, 66, 9, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+        CommentaireQualiteSI_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="CommentaireQualiteSI"
+            Default: =ThisItem.CommentaireQualiteSI
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="CommentaireQualiteSI"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =227
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "CommentaireQualiteSI")
+            Required: =false
+            Update: =CommentaireQualiteSI_DataCard_Value.HtmlText
+            Width: =1356
+            X: =0
+            Y: =29
+            ZIndex: =38
+
+            CommentaireQualiteSI_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Commentaires qualité de gestion et SI"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            CommentaireQualiteSI_DataCard_Value As richTextEditor:
+                BorderColor: =RougeMH
+                Default: =Parent.Default
+                Height: =164
+                Width: =1296
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+        NoteRespectConditionsConvention_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteRespectConditionsConvention"
+            Default: =If(NoteRespectConditionsConvention_DataCard_NonConcerne.Value, 0, ThisItem.NoteRespectConditionsConvention)
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NoteRespectConditionsConvention"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =90
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "NoteRespectConditionsConvention")
+            Required: =false
+            Update: =NoteRespectConditionsConvention_DataCard_Value.Value
+            Width: =1356
+            X: =0
+            Y: =30
+            ZIndex: =38
+
+            NoteRespectConditionsConvention_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Respect des conditions générales et particulières de la convention"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            NoteRespectConditionsConvention_DataCard_NonConcerne As checkbox:
+                BorderColor: =RougeMH
+                CheckboxBorderColor: =RougeMH
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =ThisItem.NonConcerneRespectCondConv
+                Height: =44
+                HoverColor: =RougeMH
+                OnCheck: =Reset(NoteRespectConditionsConvention_DataCard_Value)
+                OnUncheck: =Reset(NoteRespectConditionsConvention_DataCard_Value)
+                Size: =13
+                Text: ="Non concerné"
+                Width: =211
+                X: =265
+                Y: =50
+                ZIndex: =1
+
+            NoteRespectConditionsConvention_DataCard_Value As rating:
+                BorderColor: =RGBA(211, 66, 9, 1)
+                BorderStyle: =BorderStyle.Solid
+                BorderThickness: =0
+                Default: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =Self.Fill
+                DisplayMode: |
+                    =If(NoteRespectConditionsConvention_DataCard_NonConcerne.Value,Disabled,DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                FocusedBorderColor: =Self.BorderColor
+                FocusedBorderThickness: =2
+                Height: =40
+                HoverFill: =Self.Fill
+                PressedFill: =Self.Fill
+                RatingFill: =RGBA(211, 66, 9, 1)
+                Width: =200
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+        CommentairesRespectConditionsCon_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="CommentairesRespectConditionsCon"
+            Default: =ThisItem.CommentairesRespectConditionsCon
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="CommentairesRespectConditionsCon"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "CommentairesRespectConditionsCon")
+            Required: =false
+            Update: =CommentairesRespectConditionsCon_DataCard_Value.HtmlText
+            Width: =1356
+            X: =0
+            Y: =31
+            ZIndex: =38
+
+            CommentairesRespectConditionsCon_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Commentaires"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            CommentairesRespectConditionsCon_DataCard_Value As richTextEditor:
+                BorderColor: =RougeMH
+                Default: =Parent.Default
+                Width: =1296
+                X: =30
+                Y: =50
+                ZIndex: =5
+
+        DateProchainAudit_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="DateProchainAudit"
+            Default: =ThisItem.DateProchainAudit
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="DateProchainAudit"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =90
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "DateProchainAudit")
+            Required: =false
+            Update: =DateProchainAudit_DataCard_Value.SelectedDate
+            Width: =1356
+            X: =0
+            Y: =32
+            ZIndex: =38
+
+            DateProchainAudit_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: ="Date du prochain audit"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DateProchainAudit_DataCard_Value As datepicker:
+                BorderColor: =RougeMH
+                CalendarHeaderFill: =RGBA(211, 66, 9, 1)
+                Color: =RGBA(0, 0, 0, 1)
+                DefaultDate: =Parent.Default
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                HoverDateFill: =RGBA(255, 211, 205, 1)
+                IconBackground: =RGBA(211, 66, 9, 1)
+                SelectedDateFill: =RGBA(211, 66, 9, 1)
+                X: =30
+                Y: =49
+                ZIndex: =5
+
+        SyntheseGlobal_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="SyntheseGlobal"
+            Default: =ThisItem.SyntheseGlobal
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="SyntheseGlobal"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "SyntheseGlobal")
+            Required: =false
+            Update: =SyntheseGlobal_DataCard_Value.HtmlText
+            Width: =1356
+            X: =0
+            Y: =33
+            ZIndex: =38
+
+            SyntheseGlobal_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =34
+                Size: =13
+                Text: |-
+                    ="Synthèse globale Audit et contrôle permanent sur ce qui marche bien et ce qu’il faudrait améliorer dans les échanges, les travaux en commun…
+                    merci de communiquer également toutes informations pouvant avoir de l’importance dans nos futurs échanges avec ce délégataire"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            SyntheseGlobal_DataCard_Value As richTextEditor:
+                BorderColor: =RougeMH
+                Default: =Parent.Default
+                Width: =1296
+                X: =30
+                Y: =SyntheseGlobal_DataCard_Label.Y + SyntheseGlobal_DataCard_Label.Height + 10
+                ZIndex: =5
+
+        NoteRespectRecoNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneRespectReco"
+            Default: =ThisItem.NonConcerneRespectReco
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneRespectReco"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NoteRespectRecommandation_DataCard_NonConcerne.Value)
+            Visible: =false
+            Width: =0
+            X: =0
+            Y: =37
+            ZIndex: =38
+
+        NotePriseCompteEvoDSNNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneEvoDSN"
+            Default: =ThisItem.NonConcerneEvoDSN
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneEvoDSN"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NotePriseEnCompteEvolutionDSN_DataCard_NonConcerne.Value)
+            Visible: =false
+            Width: =0
+            X: =0
+            Y: =37
+            ZIndex: =38
+
+        NoteRespectCondConvNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneRespectCondConv"
+            Default: =ThisItem.NonConcerneRespectCondConv
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneRespectCondConv"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NoteRespectConditionsConvention_DataCard_NonConcerne.Value)
+            Visible: =false
+            Width: =0
+            X: =0
+            Y: =37
+            ZIndex: =38
+
+        NNoteDematPRDGSanteNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NNoteDematPRDGSanteNonConcerne"
+            Default: =ThisItem.NNoteDematPRDGSanteNonConcerne
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NNoteDematPRDGSanteNonConcerne"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NoteNiveauDematPRDGSante_DataCard_NonConcerne.Value)
+            Visible: =false
+            Width: =0
+            X: =0
+            Y: =37
+            ZIndex: =38
+
+        NoteDematPRDGPrevNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneDematPRDGPrev"
+            Default: =ThisItem.NonConcerneDematPRDGPrev
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneDematPRDGPrev"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NoteNiveauDematPRDGPrevoyance_DataCard_NonConcern.Value)
+            Visible: =false
+            Width: =0
+            X: =0
+            Y: =37
+            ZIndex: =38
+
+        NoteDematPRDGCotisNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneDematPRDGCotisation"
+            Default: =ThisItem.NonConcerneDematPRDGCotisation
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneDematPRDGCotisation"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NoteNiveauDematPRDGCotisation_DataCard_NonConcerne.Value)
+            Visible: =false
+            Width: =0
+            X: =0
+            Y: =37
+            ZIndex: =38
+
+        NoteQAPrestationFSSNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneQAPrestaFSS"
+            Default: =ThisItem.NonConcerneQAPrestaFSS
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneQAPrestaFSS"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =100
+            Required: =false
+            Update: =Text(NoteQualitePrestationFSS_DataCard_NonConcerne.Value)
+            Visible: =false
+            Width: =200
+            X: =0
+            Y: =37
+            ZIndex: =38
+
+        NoteQAPrestationPREVNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneQAPrestaPrev"
+            Default: =ThisItem.NonConcerneQAPrestaPrev
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneQAPrestaPrev"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NoteQualitePrestationPREV_DataCard_NonConcerne.Value)
+            Visible: =true
+            Width: =200
+            X: =2
+            Y: =37
+            ZIndex: =38
+
+        NoteDematPRDGContratsNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneDematPRDGContrats"
+            Default: =ThisItem.NonConcerneDematPRDGContrats
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneDematPRDGContrats"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NoteNiveauDematPRDGContrats_DataCard_NonConcerne.Value)
+            Visible: =true
+            Width: =200
+            X: =4
+            Y: =37
+            ZIndex: =38
+
+        NoteCapaciteAdaptationAuxEvolutiNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NoteCapaciteAdaptationAuxEvolutiNonConcerne"
+            Default: =ThisItem.NonConcerneCapaciteAdaptation
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneCapaciteAdaptation"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NoteCapaciteAdaptationAuxEvoluti_DataCard_NonConcerne.Value)
+            Visible: =false
+            Width: =0
+            X: =6
+            Y: =37
+            ZIndex: =38
+
+        NoteQualiteSINonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneQualiteSI"
+            Default: =ThisItem.NonConcerneQualiteSI
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneQualiteSI"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NoteQualiteSI_DataCard_NonConcerne.Value)
+            Visible: =false
+            Width: =0
+            X: =6
+            Y: =37
+            ZIndex: =38
+
+        NoteDernierAuditNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneDernierAudit"
+            Default: =ThisItem.NonConcerneDernierAudit
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneDernierAudit"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NotationQualiteDernierAudit_NonConcerne.Value)
+            Visible: =false
+            Width: =0
+            X: =6
+            Y: =37
+            ZIndex: =38
+
+        NoteEvolutionRADNonConcerne_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="NonConcerneEvolutionRAD"
+            Default: =ThisItem.NonConcerneEvolutionRAD
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="NonConcerneEvolutionRAD"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =0
+            Required: =false
+            Update: =Text(NoteEvolutionRAD_DataCard_NonConcerne.Value)
+            Visible: =false
+            Width: =0
+            X: =6
+            Y: =37
+            ZIndex: =38
+
+        StatutValidationReponse_DataCard As typedDataCard.textualEditCard:
+            BorderColor: =RougeMH
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="StatutValidationReponse"
+            Default: =ThisItem.StatutValidationReponse
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: ="StatutValidationReponse"
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@varAuditEtControl], DataSourceInfo.MaxLength, "StatutValidationReponse")
+            Required: =false
+            Update: =StatutValidationReponse_DataCard_Value.Text
+            Visible: =false
+            Width: =1366
+            X: =0
+            Y: =35
+            ZIndex: =38
+
+            StatutValidationReponse_DataCard_Label As label:
+                AutoHeight: =true
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                Height: =34
+                Size: =13
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            StatutValidationReponse_DataCard_Value As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderThickness: =2
+                Color: =RGBA(0, 0, 0, 1)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                DisplayMode: =Parent.DisplayMode
+                FocusedBorderThickness: =4
+                HoverBorderColor: =RGBA(131, 24, 75, 1)
+                HoverColor: =RGBA(0, 0, 0, 1)
+                HoverFill: =RGBA(255, 211, 205, 1)
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Size: =13
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =StatutValidationReponse_DataCard_Label.Y + StatutValidationReponse_DataCard_Label.Height + 5
+                ZIndex: =2
+
+    "'En-Tête-grp_1' As group":
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =37
+
+        "'Titre logos et support_1' As groupContainer.horizontalAutoLayoutContainer":
+            DisplayMode: =DisplayMode.Edit
+            Height: =90
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutJustifyContent: =LayoutJustifyContent.SpaceBetween
+            Width: =1366
+            ZIndex: =35
+
+            Logo_2 As image:
+                BorderColor: =RougeMH
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledFill: =RGBA(244, 244, 244, 1)
+                Height: =42
+                Image: ='logo mh'
+                Width: =160
+                X: =72
+                Y: =170
+                ZIndex: =1
+
+            TitreDirection_2 As label:
+                Align: =Align.Center
+                BorderColor: =RougeMH
+                Color: =RougeMH
+                DisabledColor: =RGBA(166, 166, 166, 1)
+                FillPortions: =1
+                FontWeight: =FontWeight.Semibold
+                Height: =42
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Size: =34
+                Text: ="Partenaires 360 - Audit et contrôle permanent"
+                Width: =674
+                X: =383
+                Y: =194
+                ZIndex: =2
+
+            Icon1 As icon.Home:
+                BorderColor: =RGBA(131, 24, 75, 1)
+                Color: =RougeMH
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledColor: =RGBA(244, 244, 244, 1)
+                Height: =42
+                Icon: =Icon.Home
+                OnSelect: |-
+                    =Navigate(Screen1);
+                    Refresh(varDemandes)
+                Width: =42
+                ZIndex: =3
+
+            Container2_1 As groupContainer.manualLayoutContainer:
+                AlignInContainer: =AlignInContainer.SetByContainer
+                DisplayMode: =DisplayMode.Edit
+                FillPortions: =0
+                Height: =58
+                LayoutDirection: =LayoutDirection.Horizontal
+                LayoutMinHeight: =48
+                LayoutMinWidth: =48
+                LayoutMode: =LayoutMode.Manual
+                PaddingLeft: =10
+                PaddingRight: =10
+                Width: =88
+                ZIndex: =4
+
+                Support_icn_1 As image:
+                    BorderColor: =RougeMH
+                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                    DisabledFill: =RGBA(244, 244, 244, 1)
+                    Height: =58
+                    Image: =support_agent_black_24dp
+                    OnSelect: |-
+                        =UpdateContext({_visiblePopupSupport:true})
+                    PaddingTop: =10
+                    Width: =58
+                    X: =10
+                    ZIndex: =1
+
+                Neoreeds_btn_2 As button:
+                    DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                    DisabledColor: =RGBA(166, 166, 166, 1)
+                    DisabledFill: =RGBA(244, 244, 244, 1)
+                    Fill: |-
+                        =RGBA(211, 66, 9, 0
+                        )
+                    FontWeight: =FontWeight.Semibold
+                    Height: =58
+                    HoverColor: =
+                    HoverFill: =
+                    OnSelect: |-
+                        =UpdateContext({_visiblePopupSupport:true})
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    PressedColor: =
+                    PressedFill: =
+                    Size: =15
+                    Text: |
+                        =
+                    Width: =58
+                    X: =10
+                    ZIndex: =2
+
+        Rectangle1_16 As rectangle:
+            BorderColor: =RougeMH
+            BorderThickness: =1
+            Fill: =RGBA(246, 88, 16, 1)
+            Height: =2
+            Width: =1366
+            Y: |-
+                =
+                'Titre logos et support_1'.Y + 'Titre logos et support_1'.Height
+            ZIndex: =36
+
